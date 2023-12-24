@@ -52,7 +52,7 @@ class Multimon:
         while self._running:
             line = self.subprocs['mm'].stdout.readline()
             line = line.strip()
-            m = start_frame_re.match(line)
+            m = start_frame_re.match(line).decode("utf-8")
             self.logger.debug(m)
             if m:
                 tnc2_frame = m.group(1)
