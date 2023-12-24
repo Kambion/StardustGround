@@ -49,8 +49,9 @@ class Multimon:
     def _mm_worker(self):
         while self._running:
             line = self.subprocs['mm'].stdout.readline()
-            line = line.strip()
+            line = str(line.strip())
             m = start_frame_re.match(line)
+            #print(line)
             if m:
                 tnc2_frame = m.group(1)
                 self.frame_handler(tnc2_frame)
