@@ -24,6 +24,9 @@ formatter = logging.Formatter('[%(asctime)s] %(levelname)+8s: %(message)s', date
 loghandler.setFormatter(formatter)
 logger.addHandler(loghandler)
 
+logger.debug("Starting Ground Station")
+logger.debug("Tracking callsing: %s" % config["callsign"])
+
 def mmcb(tnc2_frame):
     try:
         frame = APRSFrame()
@@ -46,7 +49,7 @@ def mmcb(tnc2_frame):
 
 mm = Multimon(mmcb,config, logger)
 def signal_handler(signal, frame):
-    logger.debug("Stopping pymultimonaprs")
+    logger.debug("Stopping Ground Station")
     mm.exit()
     sys.exit(0)
 

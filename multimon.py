@@ -24,6 +24,7 @@ class Multimon:
         self._stop()
 
     def _start(self):
+        self.logger.debug("Starting Multimon")
         proc_src = subprocess.Popen(
             ['rtl_fm', '-f', str(int(self.config['rtl']['freq'] * 1e6)), '-s', '22050',
              '-p%s' % str(self.config['rtl']['ppm']), '-g', str(self.config['rtl']['gain']),
