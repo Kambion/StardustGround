@@ -25,7 +25,7 @@ loghandler.setFormatter(formatter)
 logger.addHandler(loghandler)
 
 logger.debug("Starting Ground Station")
-logger.debug("Tracking callsing: %s" % config["callsign"])
+logger.debug("Tracking callsign: %s" % config["callsign"])
 
 def mmcb(tnc2_frame):
     try:

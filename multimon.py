@@ -51,7 +51,7 @@ class Multimon:
     def _mm_worker(self):
         while self._running:
             line = self.subprocs['mm'].stdout.readline()
-            line = str(line.strip())
+            line = line.strip()
             m = start_frame_re.match(line)
             self.logger.debug(m)
             if m:
