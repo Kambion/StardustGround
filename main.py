@@ -3,6 +3,7 @@ import json
 import signal
 import sys
 from time import sleep
+import logging
 import argparse
 from frame import APRSFrame, InvalidFrame
 
@@ -14,6 +15,14 @@ parser.add_argument('-v', '--verbose', action='store_true', help='Log all traffi
 args = parser.parse_args()
 
 config = json.load(open(args.config))
+
+logger = logging.getLogger('pymultimonaprs')
+logger.setLevel(logging.DEBUG)
+
+loghandler = logging.FileHandler(config["logfile"])
+formatter = logging.Formatter('[%(asctime)s] %(levelname)+8s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+loghandler.setFormatter(formatter)
+logger.addHandler(loghandler)
 
 def mmcb(tnc2_frame):
     try:
@@ -27,17 +36,17 @@ def mmcb(tnc2_frame):
         # '}' is the Third-Party Data Type Identifier (used to encapsulate pkgs)
         # indicating traffic from the internet
         if len(reject_paths.intersection(frame.path)) > 0 or frame.payload.startswith("}"):
-            print("rejected: %s" % frame.export(False))
+            logger.debug("rejected: %s" % frame.export(False))
         else:
-            print("%s" % frame.export(False))
+            logger.debug("%s" % frame.export(False))
 
     except InvalidFrame:
         pass
 
 
-mm = Multimon(mmcb,config)
+mm = Multimon(mmcb,config, logger)
 def signal_handler(signal, frame):
-    print("Stopping pymultimonaprs")
+    logger.debug("Stopping pymultimonaprs")
     mm.exit()
     sys.exit(0)
 

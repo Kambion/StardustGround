@@ -8,9 +8,10 @@ start_frame_re = re.compile(r'^APRS: (.*)')
 
 
 class Multimon:
-    def __init__(self, frame_handler, config):
+    def __init__(self, frame_handler, config, logger):
         self.frame_handler = frame_handler
         self.config = config
+        self.logger = logger
         self.subprocs = {}
         self._start()
         self._running = True
@@ -51,7 +52,7 @@ class Multimon:
             line = self.subprocs['mm'].stdout.readline()
             line = str(line.strip())
             m = start_frame_re.match(line)
-            #print(line)
+            self.logger.debug(m)
             if m:
                 tnc2_frame = m.group(1)
                 self.frame_handler(tnc2_frame)

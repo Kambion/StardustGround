@@ -6,5 +6,6 @@
 		"gain": 0,
 		"offset_tuning": false,
 		"device_index": 0
-	}
+	},
+	"logfile": "groundLog.txt"
 }
