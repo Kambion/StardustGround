@@ -2,9 +2,7 @@
 
 import threading
 import subprocess
-import re
 
-start_frame_re = re.compile(r'^APRS: (.*)')
 
 
 class Multimon:
@@ -51,7 +49,7 @@ class Multimon:
     def _mm_worker(self):
         while self._running:
             line = self.subprocs['mm'].stdout.readline()
-            line = str(line.strip())
+            line = line.strip()
             self.frameQueue.put(line)
             #m = start_frame_re.match(line)
             #if m:
